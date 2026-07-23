@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-be": "node index.js"
+    "start-be": "node src/index.js"
   },
   "dependencies": {
     "express": "^5.2.1"
