@@ -1,0 +1,58 @@
+# =============================================================================
+# docker-compose.yml
+# -----------------------------------------------------------------------------
+# WHAT: Describes how to run Postgres in a Docker container for local testing.
+# WHY:  You get a real Postgres without installing it on Windows. The data lives
+#       in a Docker volume, so restarting the container does not wipe your notes
+#       (unless you explicitly remove the volume).
+# HOW:  From the repo root, run:
+#         docker compose up -d
+#       That reads this file, downloads the image if needed, and starts the DB
+#       in the background (-d = detached).
+# =============================================================================
+
+services:
+  # "db" is the service name. Other containers (if you add them later) can reach
+  # Postgres at hostname "db". From your host machine (Node, curl, etc.) you use
+  # localhost:5432 because of the ports mapping below.
+  db:
+    # Official Postgres image. "16" = major version. "alpine" = smaller Linux
+    # base image — fine for local/dev; same Postgres, less disk/download size.
+    image: postgres:16-alpine
+
+    # Friendly name shown in `docker ps` (optional but clearer than a random id).
+    container_name: test-fe-be-db-postgres
+
+    # These env vars are how the official Postgres image creates the first user,
+    # password, and database on first start. They must match be/.env so Node can
+    # connect with the same credentials.
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: appdb
+
+    # Map container port 5432 → host port 5432.
+    # Inside the container Postgres always listens on 5432.
+    # On your machine you connect to localhost:5432.
+    # Format: "HOST_PORT:CONTAINER_PORT"
+    ports:
+      - "5432:5432"
+
+    # A named volume stores Postgres data files on the Docker host.
+    # Without a volume, stopping/removing the container would lose all data.
+    # "pgdata" is just a label; Docker creates/manages the actual folder.
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+    # Simple healthcheck: Docker periodically runs `pg_isready` inside the
+    # container. Useful later if other services should wait until Postgres is up.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d appdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+# Top-level volumes section: declares named volumes used by services above.
+# Docker creates "pgdata" the first time you `docker compose up`.
+volumes:
+  pgdata:
