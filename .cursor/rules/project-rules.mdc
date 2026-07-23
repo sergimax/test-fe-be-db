@@ -22,9 +22,11 @@ alwaysApply: true
 Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
 
 ```
-<type>[optional scope]: <description>
+<type>(<scope>): <description>
 ```
 
+- Always set a **scope** (area of work: package, folder, or feature theme)
+- If the change spans multiple themes/folders/files and a single scope is hard to name, use `*`
 - **feat:** new feature (MINOR)
 - **fix:** bug fix (PATCH)
 - **docs:** documentation only
@@ -35,7 +37,9 @@ Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
 - **chore:** build, CI, tooling
 - **BREAKING CHANGE:** use `!` after type/scope or footer (MAJOR)
 
-Example: `feat(auth): add login form`
+Examples:
+- `feat(auth): add login form`
+- `feat(*): description`
 
 ## Versioning & Changelog
 
