@@ -1,0 +1,73 @@
+---
+description: Basic rules for AI agents working on this project
+alwaysApply: true
+---
+
+# Project Rules for AI Agents
+
+## Code Style
+
+- Use TypeScript strictly; avoid `any` unless necessary
+- Prefer functional components and hooks in React
+- Use meaningful names; keep functions small and focused
+
+## Naming
+
+- Prefer **kebab-case** for file names (e.g. `use-user-profile.ts`, `user-profile-table/index.tsx`)
+- Keep exported symbols idiomatic (e.g. `useUserProfile` is fine), but keep **file paths** kebab-case
+- Avoid oversimplified names for locals and callback params (e.g. `v`, `d`, `c`, `e`); prefer descriptive names like `event`, `nextValue`, `item`, `row`
+
+## Commit Messages
+
+Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
+
+```
+<type>[optional scope]: <description>
+```
+
+- **feat:** new feature (MINOR)
+- **fix:** bug fix (PATCH)
+- **docs:** documentation only
+- **style:** formatting, no code change
+- **refactor:** code change that neither fixes nor adds a feature
+- **perf:** performance improvement
+- **test:** adding or updating tests
+- **chore:** build, CI, tooling
+- **BREAKING CHANGE:** use `!` after type/scope or footer (MAJOR)
+
+Example: `feat(auth): add login form`
+
+## Versioning & Changelog
+
+- Use [Semantic Versioning](https://semver.org/): MAJOR.MINOR.PATCH
+- Version lives in `package.json`
+- When releasing: bump `package.json` version, then add a `CHANGELOG.md` entry
+- Changelog entries must describe **actual user-facing changes** included in the release (derived from commits/diff since the previous release), not just “bump version”
+
+### Changelog format
+
+- Follow [Keep a Changelog](https://keepachangelog.com/)
+- File: `CHANGELOG.md` at project root
+- Sections: `### Added`, `### Changed`, `### Deprecated`, `### Removed`, `### Fixed`, `### Security`
+- Entry format: `## [X.Y.Z] - YYYY-MM-DD`
+- Add new entries at the top (above previous releases)
+- Do **not** add filler entries like “version bump for release”; if a release contains no notable changes, do not cut a release (or explicitly document why)
+
+### Version bump rules
+
+- **PATCH** — bug fixes, minor tweaks
+- **MINOR** — new features, non-breaking changes
+- **MAJOR** — breaking changes (use `BREAKING CHANGE` in commit)
+
+## Editing
+
+- Prefer editing existing files over creating new ones
+- Preserve existing formatting and indentation
+- Run linter after changes; fix any new issues
+- Follow existing patterns; check README before adding dependencies
+
+## Communication
+
+- Be direct and concise
+- Prefer answering questions before making edits when unclear
+- Explain non-obvious changes briefly
